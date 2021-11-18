@@ -30,3 +30,14 @@ export const QUERY_MULTIPLE_MEASUREMENTS = `
       }
     }
   }`;
+
+export const METRIC_SUBSCRIPTION_QUERY = `
+  subscription {
+    newMeasurement{
+      metric
+      at
+      value
+      unit
+    }
+  }
+`;

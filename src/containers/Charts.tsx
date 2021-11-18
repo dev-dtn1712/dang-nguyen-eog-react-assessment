@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
-import React, { useMemo } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
-// import Container from '@material-ui/core/Container';
 import moment from 'moment';
 import {
   LineChart,
@@ -33,7 +32,7 @@ const Charts = ({ metrics }: Metrics) => {
     return xItem;
   };
 
-  const measurementData = useMemo(() => {
+  const getMeasurementData = () => {
     const { getMultipleMeasurements } = multipleMeasurements;
     if (!getMultipleMeasurements?.length) {
       return [];
@@ -50,7 +49,7 @@ const Charts = ({ metrics }: Metrics) => {
       dataChartFormat.push(obj);
     }
     return dataChartFormat;
-  }, [multipleMeasurements]);
+  };
 
   if (!metrics.length) return null;
 
@@ -59,7 +58,7 @@ const Charts = ({ metrics }: Metrics) => {
       <LineChart
         width={500}
         height={300}
-        data={measurementData}
+        data={getMeasurementData()}
         margin={{
           top: 5,
           right: 30,
@@ -81,20 +80,18 @@ const Charts = ({ metrics }: Metrics) => {
         />
         <Legend />
 
-        {metrics
-          ? metrics.map(metric => (
-            <Line
-              type="monotone"
-              key={metric}
-              dataKey={metric}
-              strokeOpacity="1"
-              stroke="#8743cd"
-              activeDot={{ r: 8 }}
-              isAnimationActive={false}
-              dot={false}
-            />
-          ))
-          : null}
+        {metrics.map(metric => (
+          <Line
+            type="monotone"
+            key={metric}
+            dataKey={metric}
+            strokeOpacity="1"
+            stroke="#8743cd"
+            activeDot={{ r: 8 }}
+            isAnimationActive={false}
+            dot={false}
+          />
+        ))}
       </LineChart>
     </ResponsiveContainer>
   );
